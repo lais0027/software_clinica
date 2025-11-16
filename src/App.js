@@ -9,7 +9,7 @@ import Accounting from './components/Accounting';
 import { mockPatients } from './mock/patients'; //pacientes
 import { mockAppointments } from './mock/appointments'; //appointments
 
-import { usePatients } from './mock/appointments';
+import { usePatients } from './mock/patients';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
