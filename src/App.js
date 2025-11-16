@@ -6,12 +6,14 @@ import Patients from './components/Patients';
 import Appointments from './components/Appointments';
 import Treatments from './components/Treatments';
 import Accounting from './components/Accounting';
-import { mockPatients } from './mock/patients';
-import { mockAppointments } from './mock/appointments';
+import { mockPatients } from './mock/patients'; //pacientes
+import { mockAppointments } from './mock/appointments'; //appointments
+
+import { usePatients } from './mock/appointments';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
-  const [patients, setPatients] = useState(mockPatients);
+  const {patients, setPatients, loading: loadingPatients } = usePatients();
   const [appointments, setAppointments] = useState(mockAppointments);
 
   const handleAddPatient = (patientData) => {
@@ -83,14 +85,21 @@ const App = () => {
       
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-8 py-8">
-          <motion.div
-            key={currentView}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {renderCurrentView()}
-          </motion.div>
+
+          {/* Show a loading message while patients are loading */}
+          {loadingPatients ? (
+            <div>Loading patients...</div>
+          ) : (
+            <motion.div
+              key={currentView}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {renderCurrentView()}
+            </motion.div>
+          )}
+          
         </div>
       </main>
     </div>

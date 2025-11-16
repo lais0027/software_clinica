@@ -1,3 +1,22 @@
+import { useEffect, useState } from 'react';
+import { getPatients } from '../services/patientsService.js';
+
+export const usePatients = () => {
+  const [patients, setPatients] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await getPatients();
+      setPatients(data);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  return { patients, setPatients, loading };
+};
+
 export const mockPatients = [
   {
     id: '1',
