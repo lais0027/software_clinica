@@ -10,11 +10,12 @@ import { mockPatients } from './mock/patients'; //pacientes
 import { mockAppointments } from './mock/appointments'; //appointments
 
 import { usePatients } from './mock/patients';
+import { useAppointments } from './mock/appointments';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const {patients, setPatients, loading: loadingPatients } = usePatients();
-  const [appointments, setAppointments] = useState(mockAppointments);
+  const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
   const handleAddPatient = (patientData) => {
     const newPatient = {

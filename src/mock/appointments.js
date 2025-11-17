@@ -1,3 +1,23 @@
+import { useEffect, useState } from 'react';
+import { getAppointmets } from '../services/appointmentsService';
+
+export const useAppointments = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await getAppointmets();
+      setAppointments(data);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  return { appointments, setAppointments, loading };
+};
+
+
 export const mockAppointments = [
   {
     id: '1',
