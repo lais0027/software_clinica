@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAppointmets } from '../services/appointmentsService';
+import { getAppointments } from '../services/appointmentsService';
 
 export const useAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -7,7 +7,7 @@ export const useAppointments = () => {
 
   useEffect(() => {
     const load = async () => {
-      const data = await getAppointmets();
+      const data = await getAppointments();
       setAppointments(data);
       setLoading(false);
     };
