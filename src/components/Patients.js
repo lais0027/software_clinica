@@ -17,7 +17,7 @@ import { mockPatients } from '../mock/patients';
 import { formatDateOnly } from '../utils/dateHelpers';
 import AddPatientModal from './modals/AddPatientModal';
 
-import { usePatients } from './mock/patients';
+import { usePatients } from '../mock/patients';
 
 
 const Patients = () => {
