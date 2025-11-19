@@ -1,17 +1,22 @@
-import { addPatient } from "js/src/services/patientsService";
-
-const test = async () => {
+const handleAddPatient = async (patientData) => {
+  // Insert into Supabase
   const newPatient = {
-    name: "Test Person",
-    age: 31,
-    phone: "+123456789",
-    email: "test@example.com",
-    condition: "Testing",
-    diagnosis: "Testing diagnosis"
+    id: Date.now().toString(),
+    ...patientData,
+    age: parseInt(patientData.age),
+    registrationDate: new Date(),
+    status: 'activo',
+    nextAppointment: null,
+    totalSessions: 0,
+    completedSessions: 0
   };
 
-  const result = await addPatient(newPatient);
-  console.log("Inserted patient:", result);
-};
+  const addedPatient = await addPatient(newPatient);
 
-test();
+  if (addedPatient) {
+    // Add to frontend state so UI updates immediately
+    setPatients(prev => [newPatient, ...prev]);
+  } else {
+    alert("Error creating patient. Check console for details.");
+  }
+};

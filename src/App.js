@@ -18,8 +18,7 @@ const App = () => {
   const {patients, setPatients, loading: loadingPatients } = usePatients();
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
-  const handleAddPatient = async (patientData) => {
-    // Insert into Supabase
+const handleAddPatient = (patientData) => {
     const newPatient = {
       id: Date.now().toString(),
       ...patientData,
@@ -30,15 +29,8 @@ const App = () => {
       totalSessions: 0,
       completedSessions: 0
     };
-
-    const addedPatient = await addPatient(newPatient);
-
-    if (addedPatient) {
-      // Add to frontend state so UI updates immediately
-      setPatients(prev => [newPatient, ...prev]);
-    } else {
-      alert("Error creating patient. Check console for details.");
-    }
+    
+    setPatients(prev => [newPatient, ...prev]);
   };
 
   const handleAddAppointment = (appointmentData) => {
