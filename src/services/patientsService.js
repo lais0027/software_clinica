@@ -26,10 +26,10 @@ export const getPatients = async () => {
 export const addPatient = async (patientData) => {
   const payload = {
     ...patientData,
-    registration_date: new Date(),
+    registrationDate: new Date(),
     status: 'activo',
-    total_sessions: 0,
-    completed_sessions: 0
+    totalSessions: 0,
+    completedSessions: 0
   };
 
   const { data, error } = await supabase
