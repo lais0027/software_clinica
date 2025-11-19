@@ -11,6 +11,7 @@ import { mockAppointments } from './mock/appointments'; //appointments
 
 import { usePatients } from './mock/patients';
 import { useAppointments } from './mock/appointments';
+import { addPatient } from './services/patientsService';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -30,6 +31,7 @@ const App = () => {
     };
     
     setPatients(prev => [newPatient, ...prev]);
+    addPatient(newPatient)
   };
 
   const handleAddAppointment = (appointmentData) => {
