@@ -20,12 +20,14 @@ const App = () => {
 
   const handleAddPatient = async (patientData) => {
       const patient = {
-        id: Date.now().toString(),
-        ...patientData,
+        name: patientData.name,
         age: parseInt(patientData.age),
+        phone: patientData.phone,
+        email: patientData.email,
+        condition: patientData.condition,
+        diagnosis: patientData.diagnosis,
         registrationDate: new Date(),
-        status: 'activo',
-        nextAppointment: null,
+        status: "activo",
         totalSessions: 0,
         completedSessions: 0
       };
