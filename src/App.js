@@ -18,17 +18,17 @@ const App = () => {
   const {patients, setPatients, loading: loadingPatients } = usePatients();
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
-const handleAddPatient = (patientData) => {
-    const newPatient = {
-      id: Date.now().toString(),
-      ...patientData,
-      age: parseInt(patientData.age),
-      registrationDate: new Date(),
-      status: 'activo',
-      nextAppointment: null,
-      totalSessions: 0,
-      completedSessions: 0
-    };
+  const handleAddPatient = (patientData) => {
+      const newPatient = {
+        id: Date.now().toString(),
+        ...patientData,
+        age: parseInt(patientData.age),
+        registrationDate: new Date(),
+        status: 'activo',
+        nextAppointment: null,
+        totalSessions: 0,
+        completedSessions: 0
+      };
     
     setPatients(prev => [newPatient, ...prev]);
   };
