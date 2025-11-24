@@ -19,7 +19,7 @@ const App = () => {
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
   const handleAddPatient = (patientData) => {
-      const newPatient = {
+      const patient = {
         id: Date.now().toString(),
         ...patientData,
         age: parseInt(patientData.age),
@@ -29,8 +29,16 @@ const App = () => {
         totalSessions: 0,
         completedSessions: 0
       };
-    
-    setPatients(prev => [newPatient, ...prev]);
+
+    const newPatient = addPatient(patient);
+
+    // 2. Si Supabase responde correctamente...
+    if (newPatient) {
+      // ...actualizar la UI añadiendo el paciente devuelto por Supabase
+      setPatients(prev => [newPatient, ...prev]);
+    } else {
+      alert("Error al crear paciente");
+    }
   };
 
   const handleAddAppointment = (appointmentData) => {
