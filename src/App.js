@@ -18,7 +18,7 @@ const App = () => {
   const {patients, setPatients, loading: loadingPatients } = usePatients();
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
-  const handleAddPatient = (patientData) => {
+  const handleAddPatient = async (patientData) => {
       const patient = {
         id: Date.now().toString(),
         ...patientData,
@@ -30,7 +30,7 @@ const App = () => {
         completedSessions: 0
       };
 
-    const newPatient = addPatient(patient);
+    const newPatient = await addPatient(patient);
 
     // 2. Si Supabase responde correctamente...
     if (newPatient) {
