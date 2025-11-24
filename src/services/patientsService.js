@@ -23,30 +23,26 @@ export const getPatients = async () => {
 };
 
 // Add a new patient
-export const addPatient = async (patientData) => {
+export const addPatient = async (p) => {
   const payload = {
-    ...patientData,
-    registrationDate: new Date(),
-    status: 'activo',
-    totalSessions: 0,
-    completedSessions: 0
+    name: p.name,
+    age: p.age,
+    phone: p.phone,
+    email: p.email,
+    condition: p.condition,
+    registrationDate: new Date().toISOString(),
+    status: "activo"
   };
 
   const { data, error } = await supabase
-    .from('patients')
-    .insert([payload])
+    .from("patients")
+    .insert(payload)
     .select();
 
   if (error) {
-    console.error('❌ Error inserting patient:', error.message);
+    console.error("❌ Error inserting patient:", error);
     return null;
   }
 
-  const p = data[0];
-
-  return {
-    ...p,
-    registrationDate: new Date(p.registration_date),
-    nextAppointment: p.next_appointment ? new Date(p.next_appointment) : null
-  };
+  return data[0];
 };
