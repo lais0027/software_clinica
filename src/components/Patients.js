@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   Clock
 } from 'lucide-react';
-import { mockPatients } from '../mock/patients';
 import { formatDateOnly } from '../utils/dateHelpers';
 import AddPatientModal from './modals/AddPatientModal';
 

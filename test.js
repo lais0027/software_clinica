@@ -20,3 +20,22 @@ const handleAddPatient = async (patientData) => {
     alert("Error creating patient. Check console for details.");
   }
 };
+
+import { addPatient } from "./src/services/patientsService.js";
+
+const test = async () => {
+  const dummy = {
+    name: "Paciente de Prueba",
+    age: 30,
+    phone: "+34 600 000 000",
+    email: "test@example.com",
+    condition: "Prueba",
+    diagnosis: "N/A"
+  };
+
+  const result = await addPatient(dummy);
+
+  console.log("Resultado de addPatient:", result);
+};
+
+test();

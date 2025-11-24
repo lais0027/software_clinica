@@ -20,6 +20,7 @@ const App = () => {
 
   const handleAddPatient = async (patientData) => {
       const patient = {
+        id: Date.now().toString(),
         name: patientData.name,
         age: parseInt(patientData.age),
         phone: patientData.phone,
