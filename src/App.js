@@ -19,19 +19,19 @@ const App = () => {
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
   const handleAddPatient = async (patientData) => {
-      const patient = {
-        id: Date.now().toString(),
-        name: patientData.name,
-        age: parseInt(patientData.age),
-        phone: patientData.phone,
-        email: patientData.email,
-        condition: patientData.condition,
-        diagnosis: patientData.diagnosis,
-        registrationDate: new Date(),
-        status: "activo",
-        totalSessions: 0,
-        completedSessions: 0
-      };
+    const patient = {
+      id: Date.now().toString(),
+      name: patientData.name,
+      age: parseInt(patientData.age),
+      phone: patientData.phone,
+      email: patientData.email,
+      condition: patientData.condition,
+      diagnosis: patientData.diagnosis,
+      registrationDate: new Date(),
+      status: "activo",
+      totalSessions: 0,
+      completedSessions: 0
+    };
 
     const newPatient = await addPatient(patient);
 

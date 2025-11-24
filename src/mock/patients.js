@@ -17,7 +17,50 @@ export const usePatients = () => {
   return { patients, setPatients, loading };
 };
 
-
+export const mockPatients = [
+  {
+    id: '1',
+    name: 'María González',
+    age: 34,
+    phone: '+34 665 123 456',
+    email: 'maria.gonzalez@email.com',
+    condition: 'Lesión lumbar L5-S1',
+    diagnosis: 'Hernia discal',
+    registrationDate: new Date('2025-01-10'),
+    status: 'activo',
+    nextAppointment: new Date('2025-01-20T10:00:00'),
+    totalSessions: 8,
+    completedSessions: 5
+  },
+  {
+    id: '2',
+    name: 'Carlos Ruiz',
+    age: 28,
+    phone: '+34 677 234 567',
+    email: 'carlos.ruiz@email.com',
+    condition: 'Tendinitis hombro derecho',
+    diagnosis: 'Síndrome subacromial',
+    registrationDate: new Date('2025-01-08'),
+    status: 'activo',
+    nextAppointment: new Date('2025-01-21T16:30:00'),
+    totalSessions: 6,
+    completedSessions: 2
+  },
+  {
+    id: '3',
+    name: 'Ana Martín',
+    age: 45,
+    phone: '+34 688 345 678',
+    email: 'ana.martin@email.com',
+    condition: 'Rehabilitación post-operatoria rodilla',
+    diagnosis: 'Post-cirugía LCA',
+    registrationDate: new Date('2025-01-05'),
+    status: 'tratamiento',
+    nextAppointment: new Date('2025-01-22T09:00:00'),
+    totalSessions: 12,
+    completedSessions: 7
+  }
+];
 
 export const mockAppointments = [
   {
