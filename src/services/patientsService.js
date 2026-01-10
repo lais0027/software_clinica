@@ -36,7 +36,7 @@ export const addPatient = async (p) => {
 
   const { data, error } = await supabase
     .from("patients")
-    .insert(payload)
+    .insert([payload])
     .select();
 
   if (error) {
