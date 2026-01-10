@@ -44,7 +44,7 @@ const App = () => {
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
    
-    const { data, error } = await supabase.from("patients").insert([patient]).select();
+    //const { data, error } = await supabase.from("patients").insert([patient]).select();
 
     const newPatient = await addPatient(patient);
 
