@@ -46,7 +46,16 @@ const App = () => {
    
     //const { data, error } = await supabase.from("patients").insert([patient]).select();
 
-    const newPatient = await addPatient(patient);
+    const patient_add = {
+      name: String(patient.name),
+      age: Int8Array(patient.age),
+      phone: String(patient.phone),
+      email: String(patient.email),
+      condition: String(patient.condition),
+      diagnosis: String(patient.diagnosis)
+    };
+
+    const newPatient = await addPatient(patient_add);
 
     // 2. Si Supabase responde correctamente...
 
