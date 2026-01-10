@@ -13,12 +13,17 @@ import { usePatients } from './mock/patients';
 import { useAppointments } from './mock/appointments';
 import { addPatient } from './services/patientsService';
 
+
 const App = () => {
+
   const [currentView, setCurrentView] = useState('dashboard');
+
   const {patients, setPatients, loading: loadingPatients } = usePatients();
+
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
   const handleAddPatient = async (patientData) => {
+
     const patient = {
       id: Date.now().toString(),
       name: patientData.name,
@@ -35,98 +40,179 @@ const App = () => {
 
     const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
-    
+
+
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    
-    const { data, error } = await supabase
-      .from("patients")
-      .insert([patient])
-      .select();
-      
+   
+    const { data, error } = await supabase.from("patients").insert([patient]).select();
+
     const newPatient = await addPatient(patient);
 
     // 2. Si Supabase responde correctamente...
+
     if (newPatient) {
+
       // ...actualizar la UI añadiendo el paciente devuelto por Supabase
+
       setPatients(prev => [newPatient, ...prev]);
+
     } else {
+
       alert("Error al crear paciente");
+
     }
+
   };
+
+
 
   const handleAddAppointment = (appointmentData) => {
+
     const newAppointment = {
+
       id: Date.now().toString(),
+
       ...appointmentData
+
     };
-    
+
+   
+
     setAppointments(prev => [newAppointment, ...prev]);
 
+
+
     // Actualizar la próxima cita del paciente
+
     if (appointmentData.patientId) {
-      setPatients(prev => prev.map(patient => 
+
+      setPatients(prev => prev.map(patient =>
+
         patient.id === appointmentData.patientId
+
           ? { ...patient, nextAppointment: appointmentData.date }
+
           : patient
+
       ));
+
     }
+
   };
+
+
 
   const renderCurrentView = () => {
+
     switch (currentView) {
+
       case 'dashboard':
+
         return <Dashboard appointments={appointments} patients={patients} />;
+
       case 'patients':
+
         return (
-          <Patients 
-            patients={patients} 
-            setPatients={setPatients}
-            onAddPatient={handleAddPatient}
-          />
-        );
-      case 'appointments':
-        return (
-          <Appointments 
-            appointments={appointments}
-            setAppointments={setAppointments}
+
+          <Patients
+
             patients={patients}
-            onAddAppointment={handleAddAppointment}
+
+            setPatients={setPatients}
+
+            onAddPatient={handleAddPatient}
+
           />
+
         );
+
+      case 'appointments':
+
+        return (
+
+          <Appointments
+
+            appointments={appointments}
+
+            setAppointments={setAppointments}
+
+            patients={patients}
+
+            onAddAppointment={handleAddAppointment}
+
+          />
+
+        );
+
       case 'treatments':
+
         return <Treatments />;
+
       case 'accounting':
+
         return <Accounting />;
+
       default:
+
         return <Dashboard appointments={appointments} patients={patients} />;
+
     }
+
   };
 
+
+
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex">
+
       <Sidebar currentView={currentView} onViewChange={setCurrentView} />
-      
+
+     
+
       <main className="flex-1 overflow-auto">
+
         <div className="container mx-auto px-8 py-8">
 
+
+
           {/* Show a loading message while patients are loading */}
+
           {loadingPatients ? (
+
             <div>Loading patients...</div>
+
           ) : (
+
             <motion.div
+
               key={currentView}
+
               initial={{ opacity: 0, y: 20 }}
+
               animate={{ opacity: 1, y: 0 }}
+
               transition={{ duration: 0.5 }}
+
             >
+
               {renderCurrentView()}
+
             </motion.div>
           )}
-          
+
+         
+
         </div>
+
       </main>
+
     </div>
+
   );
+
 };
+
+
 
 export default App;
