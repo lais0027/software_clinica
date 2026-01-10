@@ -54,7 +54,20 @@ const App = () => {
       condition: String(patient.condition),
       diagnosis: String(patient.diagnosis)
     };
+    const test = async () => {
+      const dummy = {
+        name: "Paciente de Prueba",
+        age: 30,
+        phone: "+34 600 000 000",
+        email: "test@example.com",
+        condition: "Prueba",
+        diagnosis: "N/A"
+      };
 
+      const result = await addPatient(dummy);
+
+      console.log("Resultado de addPatient:", result);
+    };
     const newPatient = await addPatient(patient_add);
 
     // 2. Si Supabase responde correctamente...
