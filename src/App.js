@@ -12,6 +12,8 @@ import { mockAppointments } from './mock/appointments'; //appointments
 import { usePatients } from './mock/patients';
 import { useAppointments } from './mock/appointments';
 import { addPatient } from './services/patientsService';
+import { createClient } from '@supabase/supabase-js';
+
 
 
 const App = () => {
@@ -24,7 +26,8 @@ const App = () => {
 
   const handleAddPatient = async (patientData) => {
     const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
-    const supabaseAnonKey = 'TU_ANON_KEY';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
+
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
     const patient = {

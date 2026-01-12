@@ -19,7 +19,7 @@ import AddPatientModal from './modals/AddPatientModal';
 import { usePatients } from '../mock/patients';
 
 
-const Patients = () => {
+const Patients = ({ patients, setPatients, onAddPatient }) => {
   const {patients, setPatients, loading: loadingPatients } = usePatients();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('todos');
@@ -58,22 +58,6 @@ const Patients = () => {
       default:
         return <AlertCircle className="w-4 h-4" />;
     }
-  };
-
-  const handleAddPatient = (patientData) => {
-    const newPatient = {
-      id: Date.now().toString(),
-      ...patientData,
-      age: parseInt(patientData.age),
-      registrationDate: new Date(),
-      status: 'activo',
-      nextAppointment: null,
-      totalSessions: 0,
-      completedSessions: 0
-    };
-    
-    setPatients(prev => [newPatient, ...prev]);
-    setShowAddModal(false);
   };
 
   return (
@@ -241,7 +225,9 @@ const Patients = () => {
       <AddPatientModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSubmit={handleAddPatient}
+        onSubmit={async (patientData) => {
+          await onAddPatient(patientData);
+          setShowAddModal(false);}}
       />
     </div>
   );
