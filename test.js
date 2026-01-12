@@ -1,3 +1,5 @@
+import { createClient } from '@supabase/supabase-js';
+
 const handleAddPatient = async (patientData) => {
   // Insert into Supabase
   const newPatient = {
@@ -38,4 +40,46 @@ const test = async () => {
   console.log("Resultado de addPatient:", result);
 };
 
-test();
+const handleAddPatient_ = async (patientData) => {
+  const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
+
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  const patient = {
+    name: patientData.name,
+    age: Number(patientData.age),
+    phone: patientData.phone,
+    email: patientData.email,
+    condition: patientData.condition,
+    diagnosis: patientData.diagnosis,
+    status: "activo",
+  };
+
+  console.log("📤 Insertando en Supabase:", patient);
+
+  const { data, error } = await supabase
+    .from("patients")
+    .insert([patient])
+    .select();
+
+  if (error) {
+    console.error("❌ Error Supabase:", error);
+    alert("Error al crear paciente");
+    return;
+  }
+
+  console.log("✅ Insertado correctamente:", data[0]);
+
+  setPatients(prev => [data[0], ...prev]);
+};
+
+handleAddPatient_({
+    name: "AAA",
+    age: 23,
+    phone: "AAA",
+    email: "AAA",
+    condition: "AAA",
+    diagnosis: "AAA",
+    status: "activo",
+  })
