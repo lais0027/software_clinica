@@ -16,11 +16,9 @@ import {
 import { formatDateOnly } from '../utils/dateHelpers';
 import AddPatientModal from './modals/AddPatientModal';
 
-import { usePatients } from '../mock/patients';
 
 
 const Patients = ({ patients, setPatients, onAddPatient }) => {
-  const {patients, setPatients, loading: loadingPatients } = usePatients();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('todos');
   const [showAddModal, setShowAddModal] = useState(false);
