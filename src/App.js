@@ -23,49 +23,36 @@ const App = () => {
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
   const handleAddPatient = async (patientData) => {
+    const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
+    const supabaseAnonKey = 'TU_ANON_KEY';
+    const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
     const patient = {
-      id: Date.now().toString(),
       name: patientData.name,
-      age: parseInt(patientData.age),
+      age: Number(patientData.age),
       phone: patientData.phone,
       email: patientData.email,
       condition: patientData.condition,
       diagnosis: patientData.diagnosis,
-      registrationDate: new Date(),
       status: "activo",
-      totalSessions: 0,
-      completedSessions: 0
     };
 
- 
-    //const { data, error } = await supabase.from("patients").insert([patient]).select();
+    console.log("📤 Insertando en Supabase:", patient);
 
-    const patient_add = {
-      name: String(patient.name),
-      age: Number(patient.age),
-      phone: String(patient.phone),
-      email: String(patient.email),
-      condition: String(patient.condition),
-      diagnosis: String(patient.diagnosis)
-    };
+    const { data, error } = await supabase
+      .from("patients")
+      .insert([patient])
+      .select();
 
-    const newPatient = await addPatient(patient_add);
-
-    // 2. Si Supabase responde correctamente...
-
-    if (newPatient) {
-
-      // ...actualizar la UI añadiendo el paciente devuelto por Supabase
-
-      setPatients(prev => [newPatient, ...prev]);
-
-    } else {
-
+    if (error) {
+      console.error("❌ Error Supabase:", error);
       alert("Error al crear paciente");
-
+      return;
     }
 
+    console.log("✅ Insertado correctamente:", data[0]);
+
+    setPatients(prev => [data[0], ...prev]);
   };
 
 
