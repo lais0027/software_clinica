@@ -38,36 +38,18 @@ const App = () => {
       completedSessions: 0
     };
 
-    const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
-
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-   
+ 
     //const { data, error } = await supabase.from("patients").insert([patient]).select();
 
     const patient_add = {
       name: String(patient.name),
-      age: Int8Array(patient.age),
+      age: Number(patient.age),
       phone: String(patient.phone),
       email: String(patient.email),
       condition: String(patient.condition),
       diagnosis: String(patient.diagnosis)
     };
-    const test = async () => {
-      const dummy = {
-        name: "Paciente de Prueba",
-        age: 30,
-        phone: "+34 600 000 000",
-        email: "test@example.com",
-        condition: "Prueba",
-        diagnosis: "N/A"
-      };
 
-      const result = await addPatient(dummy);
-
-      console.log("Resultado de addPatient:", result);
-    };
     const newPatient = await addPatient(patient_add);
 
     // 2. Si Supabase responde correctamente...
