@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabaseClient';
 
-// Idealmente, usa variables de entorno (.env) para esto
-const supabaseUrl = 'https://tu-url.supabase.co';
-const supabaseAnonKey = 'tu-anon-key';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
