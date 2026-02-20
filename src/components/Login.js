@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { supabase } from './supabaseClient';
-
+import { supabase } from '../supabaseClient';
 
 
 const Login = () => {
