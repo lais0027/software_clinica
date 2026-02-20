@@ -14,6 +14,12 @@ import { useAppointments } from './mock/appointments';
 import { addPatient } from './services/patientsService';
 import { createClient } from '@supabase/supabase-js';
 
+import Login from './components/Login';
+
+const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 
 const App = () => {
@@ -24,11 +30,32 @@ const App = () => {
 
   const {appointments, setAppointments, loading: loadingAppointments } = useAppointments();
 
-  const handleAddPatient = async (patientData) => {
-    const supabaseUrl = 'https://nftetzvanfgnndclfwkc.supabase.co';
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mdGV0enZhbmZnbm5kY2xmd2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NTkzNjQsImV4cCI6MjA3ODUzNTM2NH0.UN_Sonr7ZrgEpynWIAfxTn35qwmh_KQdCslBTPckf5U';
+  useEffect(() => {
+    // 1. Obtener sesión actual al cargar
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    // 2. Escuchar cambios en la autenticación (Login/Logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Función para cerrar sesión
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
+  // SI NO HAY SESIÓN, MOSTRAR LOGIN
+  if (!session) {
+    return <Login />;
+  }
+  
+  const handleAddPatient = async (patientData) => {
+    
 
     const patient = {
       name: patientData.name,
