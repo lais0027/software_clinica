@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -23,7 +23,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 
 const App = () => {
-
+  const [session, setSession] = useState(null);
   const [currentView, setCurrentView] = useState('dashboard');
 
   const {patients, setPatients, loading: loadingPatients } = usePatients();
@@ -49,11 +49,8 @@ const App = () => {
     await supabase.auth.signOut();
   };
 
-  // SI NO HAY SESIÓN, MOSTRAR LOGIN
-  if (!session) {
-    return <Login />;
-  }
-  
+
+
   const handleAddPatient = async (patientData) => {
     
 
@@ -181,7 +178,9 @@ const App = () => {
 
   };
 
-
+  if (!session) {
+      return <Login />;
+    }
 
   return (
 
